@@ -1,0 +1,250 @@
+Right
+    [ TokenXMLDeclaration
+        ( XMLDeclaration "1.0" ( Just "utf-8" ) Nothing )
+    , TokenData [ ContentText "" ]
+    , TokenStartTag
+        ( StartTag
+            ( QName
+                { namePrefix = ""
+                , nameLocal = "feed"
+                }
+            )
+            [ Attribute
+                ( QName
+                    { namePrefix = ""
+                    , nameLocal = "xmlns"
+                    }
+                ) [ ContentText "http://www.w3.org/2005/Atom" ]
+            ]
+        )
+    , TokenData [ ContentText "
+        " ]
+    , TokenStartTag
+        ( StartTag
+            ( QName
+                { namePrefix = ""
+                , nameLocal = "title"
+                }
+            )
+            [ Attribute
+                ( QName
+                    { namePrefix = ""
+                    , nameLocal = "type"
+                    }
+                ) [ ContentText "text" ]
+            ]
+        )
+    , TokenData
+        [ ContentReference ( EntityRef "lt" )
+        , ContentText "em"
+        , ContentReference ( EntityRef "gt" )
+        , ContentText "Example"
+        , ContentReference ( EntityRef "lt" )
+        , ContentText "/em"
+        , ContentReference ( EntityRef "gt" )
+        , ContentText " Feed"
+        ]
+    , TokenEndTag
+        ( QName
+            { namePrefix = ""
+            , nameLocal = "title"
+            }
+        )
+    , TokenData [ ContentText "
+        " ]
+    , TokenEmptyElementTag
+        ( EmptyElementTag
+            ( QName
+                { namePrefix = ""
+                , nameLocal = "link"
+                }
+            )
+            [ Attribute
+                ( QName
+                    { namePrefix = ""
+                    , nameLocal = "href"
+                    }
+                ) [ ContentText "http://example.org/" ]
+            ]
+        )
+    , TokenData [ ContentText "
+        " ]
+    , TokenStartTag
+        ( StartTag
+            ( QName
+                { namePrefix = ""
+                , nameLocal = "updated"
+                }
+            ) []
+        )
+    , TokenData [ ContentText "2003-12-13T18:30:02Z" ]
+    , TokenEndTag
+        ( QName
+            { namePrefix = ""
+            , nameLocal = "updated"
+            }
+        )
+    , TokenData [ ContentText "
+        " ]
+    , TokenStartTag
+        ( StartTag
+            ( QName
+                { namePrefix = ""
+                , nameLocal = "author"
+                }
+            ) []
+        )
+    , TokenData [ ContentText "
+          " ]
+    , TokenStartTag
+        ( StartTag
+            ( QName
+                { namePrefix = ""
+                , nameLocal = "name"
+                }
+            ) []
+        )
+    , TokenData [ ContentText "John Doe" ]
+    , TokenEndTag
+        ( QName
+            { namePrefix = ""
+            , nameLocal = "name"
+            }
+        )
+    , TokenData [ ContentText "
+        " ]
+    , TokenEndTag
+        ( QName
+            { namePrefix = ""
+            , nameLocal = "author"
+            }
+        )
+    , TokenData [ ContentText "
+        " ]
+    , TokenStartTag
+        ( StartTag
+            ( QName
+                { namePrefix = ""
+                , nameLocal = "id"
+                }
+            ) []
+        )
+    , TokenData [ ContentText "urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6" ]
+    , TokenEndTag
+        ( QName
+            { namePrefix = ""
+            , nameLocal = "id"
+            }
+        )
+    , TokenData [ ContentText "
+        " ]
+    , TokenStartTag
+        ( StartTag
+            ( QName
+                { namePrefix = ""
+                , nameLocal = "entry"
+                }
+            ) []
+        )
+    , TokenData [ ContentText "
+          " ]
+    , TokenStartTag
+        ( StartTag
+            ( QName
+                { namePrefix = ""
+                , nameLocal = "title"
+                }
+            ) []
+        )
+    , TokenData [ ContentText "Atom-Powered Robots Run Amok" ]
+    , TokenEndTag
+        ( QName
+            { namePrefix = ""
+            , nameLocal = "title"
+            }
+        )
+    , TokenData [ ContentText "
+          " ]
+    , TokenEmptyElementTag
+        ( EmptyElementTag
+            ( QName
+                { namePrefix = ""
+                , nameLocal = "link"
+                }
+            )
+            [ Attribute
+                ( QName
+                    { namePrefix = ""
+                    , nameLocal = "href"
+                    }
+                ) [ ContentText "http://example.org/2003/12/13/atom03" ]
+            ]
+        )
+    , TokenData [ ContentText "
+          " ]
+    , TokenStartTag
+        ( StartTag
+            ( QName
+                { namePrefix = ""
+                , nameLocal = "id"
+                }
+            ) []
+        )
+    , TokenData [ ContentText "urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a" ]
+    , TokenEndTag
+        ( QName
+            { namePrefix = ""
+            , nameLocal = "id"
+            }
+        )
+    , TokenData [ ContentText "
+          " ]
+    , TokenStartTag
+        ( StartTag
+            ( QName
+                { namePrefix = ""
+                , nameLocal = "updated"
+                }
+            ) []
+        )
+    , TokenData [ ContentText "2003-12-13T18:30:02Z" ]
+    , TokenEndTag
+        ( QName
+            { namePrefix = ""
+            , nameLocal = "updated"
+            }
+        )
+    , TokenData [ ContentText "
+          " ]
+    , TokenStartTag
+        ( StartTag
+            ( QName
+                { namePrefix = ""
+                , nameLocal = "summary"
+                }
+            ) []
+        )
+    , TokenData [ ContentText "Some text." ]
+    , TokenEndTag
+        ( QName
+            { namePrefix = ""
+            , nameLocal = "summary"
+            }
+        )
+    , TokenData [ ContentText "
+        " ]
+    , TokenEndTag
+        ( QName
+            { namePrefix = ""
+            , nameLocal = "entry"
+            }
+        )
+    , TokenData [ ContentText "" ]
+    , TokenEndTag
+        ( QName
+            { namePrefix = ""
+            , nameLocal = "feed"
+            }
+        )
+    , TokenData [ ContentText "" ]
+    ]

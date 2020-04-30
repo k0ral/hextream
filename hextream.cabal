@@ -1,7 +1,7 @@
 cabal-version:       2.4
 
 name:                hextream
-version:             0.1.0.0
+version:             0.1.0.1
 synopsis:            Streaming-friendly XML parsers
 description:         Cf README file
 homepage:            https://github.com/k0ral/hextream
@@ -12,7 +12,7 @@ author:              koral
 maintainer:          mail@cmoreau.info
 category:            Parsing, XML
 build-type:          Custom
-extra-source-files:  test/*.xml, test/*.golden
+extra-source-files:  README.md, test/*.xml, test/*.golden
 tested-with:         GHC <8.10 && >=8.6
 
 source-repository head

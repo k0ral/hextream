@@ -6,6 +6,10 @@ Parsers are organized into 3 layers of increasing abstraction level: low, middle
 
 The library does not define a data type nor parser for a whole XML document. Instead, parsers operate on XML tokens of various sizes, to allow for a usage in a streaming context (e.g. using [`streaming-attoparsec`](https://hackage.haskell.org/package/streaming-attoparsec)).
 
+The implementation is based on the following specifications:
+- [Extensible Markup Language (XML) 1.0 (Fifth Edition)](https://www.w3.org/TR/REC-xml/)
+- [Namespaces in XML 1.0 (Third Edition)](https://www.w3.org/TR/xml-names/)
+
 
 ## Caveats
 

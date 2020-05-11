@@ -222,9 +222,9 @@ tag entityDecoder parseName parseAttributes parseContent = parseStartToEnd <|> p
       AnyContent f       -> f mempty
       WithContent parser -> unexpected "Expected non-empty tag"
   processName name = runNameParser parseName name
-    & maybe (unexpected "Unexpected name") return
+    & either unexpected return
   processAttributes state attributes = runAttrParser (parseAttributes state) (normalizeAttributes entityDecoder attributes)
-    & maybe (unexpected "Unexpected attributes") return
+    & either unexpected return
 
 -- | Simplified version of 'tag':
 --
@@ -259,7 +259,7 @@ anyToken entityDecoder = (TokenProlog <$> prolog)
   <|> (TokenTextContent <$> textContent entityDecoder)
   where tokenTag = tag entityDecoder anyName (\name -> (name,) <$> forwardAttrs) $ \(name, attributes) ->
           TokenTag name attributes <$> AnyContent pure
-        forwardAttrs = AttrParser Just
+        forwardAttrs = AttrParser Right
 
 -- | Same as @anyToken (decodePredefinedEntities <> decodeHtmlEntities)@, provided for convenience.
 anyToken' :: CharParsing m => Monad m => TokenParser m Token

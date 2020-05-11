@@ -2,6 +2,7 @@
 {-# LANGUAGE DerivingVia                #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE NoImplicitPrelude          #-}
 {-# LANGUAGE StandaloneDeriving         #-}
 -- | All documentation examples assume the following setup:
 --
@@ -18,11 +19,14 @@ module Data.XML.Parser.High.AttrParser
 
 import           Control.Applicative
 import           Control.Arrow
-import           Control.Monad
-import           Data.Map                 (Map)
-import qualified Data.Map                 as Map
-import           Data.Text                (Text)
+import           Control.Monad.Compat
+import           Control.Monad.Fail.Compat
+import           Data.Map                  (Map)
+import qualified Data.Map                  as Map
+import           Data.Text                 (Text)
+import qualified Data.Text                 as Text
 import           Data.XML.Parser.Low.Name
+import           Prelude.Compat
 
 -- $setup
 -- >>> :set -XOverloadedStrings
@@ -30,13 +34,13 @@ import           Data.XML.Parser.Low.Name
 -- >>> import Data.XML.Parser.High
 
 -- | How to parse tag attributes.
-newtype AttrParser a = AttrParser { runAttrParser :: Map QName Text -> Maybe a }
+newtype AttrParser a = AttrParser { runAttrParser :: Map QName Text -> Either String a }
 
 deriving instance Functor AttrParser
-deriving via (WrappedArrow (Kleisli Maybe) (Map QName Text)) instance Applicative AttrParser
+deriving via (WrappedArrow (Kleisli (Either String)) (Map QName Text)) instance Applicative AttrParser
 
 -- | Can be combined with @\<|\>@
-deriving via (WrappedArrow (Kleisli Maybe) (Map QName Text)) instance Alternative AttrParser
+deriving via (WrappedArrow (Kleisli (Either String)) (Map QName Text)) instance Alternative AttrParser
 
 -- | Can be combined with @>>=@. Attributes map is forwarded without change.
 instance Monad AttrParser where
@@ -44,6 +48,9 @@ instance Monad AttrParser where
     a <- f attributes
     let AttrParser g' = g a
     g' attributes
+
+instance MonadFail AttrParser where
+  fail message = AttrParser $ const $ Left message
 
 -- | Parse any set of attributes.
 --
@@ -61,7 +68,7 @@ anyAttr = pure ()
 -- >>> parseOnly (runTokenParser $ tag' anyName noAttr noContent) "<tag key='value'></tag>"
 -- Left ...
 noAttr :: AttrParser ()
-noAttr = AttrParser $ \attributes -> if null attributes then Just () else Nothing
+noAttr = AttrParser $ \attributes -> if null attributes then Right () else Left $ "Expected no attribute, instead got: " <> show attributes
 
 -- | Parse attribute by name, and return its value.
 --
@@ -70,7 +77,7 @@ noAttr = AttrParser $ \attributes -> if null attributes then Just () else Nothin
 -- >>> parseOnly (runTokenParser $ tag' anyName (attrValue "foo") noContent) "<tag foo='bar'></tag>"
 -- Right ()
 attrValue :: QName -> AttrParser Text
-attrValue name = AttrParser $ Map.lookup name
+attrValue name = AttrParser $ maybe (Left $ "Missing attribute named " <> show name) Right . Map.lookup name
 
 -- | Assert that an attribute exists, with given name and value.
 --
@@ -81,4 +88,4 @@ attrValue name = AttrParser $ Map.lookup name
 -- >>> parseOnly (runTokenParser $ tag' anyName (hasAttr "foo" "bar") noContent) "<tag foo='bar'></tag>"
 -- Right ()
 hasAttr :: QName -> Text -> AttrParser ()
-hasAttr name value = attrValue name >>= \value' -> guard (value == value')
+hasAttr name value = attrValue name >>= \value' -> if value == value' then pure () else fail $ "Expected attribute value " <> Text.unpack value <> ", instead got: " <> Text.unpack value'

@@ -7,9 +7,7 @@
 -- > :set -XOverloadedStrings
 -- > import Data.Attoparsec.ByteString
 module Data.XML.Parser.Mid.Doctype
-  ( ExternalID(..)
-  , externalID
-  , GeneralEntityDeclaration(..)
+  ( GeneralEntityDeclaration(..)
   , generalEntityDeclaration
   , Doctype(..)
   , doctype
@@ -20,18 +18,13 @@ import Data.Maybe
 import qualified Data.Text as Text
 import Data.Text (Text)
 import           Data.XML.Parser.Low
+import           Data.XML.Parser.Mid.ExternalID
 import           Text.Parser.Char
 import           Text.Parser.Combinators
 
 -- $setup
 -- >>> :set -XOverloadedStrings
 -- >>> import Data.Attoparsec.ByteString
-
--- | External entity identifier
---
--- <https://www.w3.org/TR/REC-xml/#dt-extent>
-data ExternalID = PublicID Text Text | SystemID Text
-  deriving (Eq, Ord, Read, Show)
 
 -- | <https://www.w3.org/TR/REC-xml/#gen-entity>
 data GeneralEntityDeclaration = GeneralEntityDeclaration Text [Content]
@@ -62,24 +55,6 @@ generalEntityDeclaration = do
   optional tokenWhitespace
   tokenElementClose
   return $ GeneralEntityDeclaration name definition
-
--- | <https://www.w3.org/TR/REC-xml/#NT-ExternalID>
---
--- >>> parseOnly externalID "PUBLIC '-//Textuality//TEXT Standard open-hatch boilerplate//EN' 'http://www.textuality.com/boilerplate/OpenHatch.xml'"
--- Right (PublicID "-//Textuality//TEXT Standard open-hatch boilerplate//EN" "http://www.textuality.com/boilerplate/OpenHatch.xml")
--- >>> parseOnly externalID "SYSTEM '../grafix/OpenHatch.gif'"
--- Right (SystemID "../grafix/OpenHatch.gif")
-externalID :: CharParsing m => Monad m => m ExternalID
-externalID = publicID <|> systemID where
-  publicID = do
-    string "PUBLIC"
-    tokenWhitespace
-    a <- systemLiteral
-    tokenWhitespace
-    b <- systemLiteral
-    return $ PublicID a b
-  systemID = string "SYSTEM" *> tokenWhitespace *> (SystemID <$> systemLiteral)
-  systemLiteral = Text.pack <$> manyQuoted anyChar
 
 -- | <https://www.w3.org/TR/REC-xml/#NT-doctypedecl>
 --

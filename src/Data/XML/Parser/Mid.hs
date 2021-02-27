@@ -18,8 +18,9 @@
 -- > import Data.Attoparsec.ByteString
 module Data.XML.Parser.Mid
   ( module Data.XML.Parser.Mid.Attribute
+  , module Data.XML.Parser.Mid.Comment
   , module Data.XML.Parser.Mid.Doctype
-  , Instruction(..)
+  , module Data.XML.Parser.Mid.Instruction
   , XMLDeclaration(..)
   , StartTag(..)
   , EmptyElementTag(..)
@@ -49,7 +50,9 @@ import           Data.Text                     (Text)
 import qualified Data.Text                     as Text
 import           Data.XML.Parser.Low
 import           Data.XML.Parser.Mid.Attribute
+import           Data.XML.Parser.Mid.Comment
 import           Data.XML.Parser.Mid.Doctype
+import           Data.XML.Parser.Mid.Instruction
 import           Numeric
 import           Text.Parser.Char
 import           Text.Parser.Combinators
@@ -70,12 +73,6 @@ data Token
   | TokenComment Text
   | TokenCDATA Text
   deriving (Eq, Ord, Show)
-
--- | Processing instruction.
---
--- <https://www.w3.org/TR/REC-xml/#dt-pi>
-data Instruction = Instruction Text Text
-  deriving (Eq, Ord, Read, Show)
 
 -- | <https://www.w3.org/TR/REC-xml/#dt-xmldecl>
 data XMLDeclaration = XMLDeclaration Text (Maybe Text) (Maybe Bool)
@@ -111,27 +108,12 @@ tokenDoctype :: CharParsing m => Monad m => TokenParser m Doctype
 tokenDoctype = TokenParser doctype
 
 -- | <https://www.w3.org/TR/REC-xml/#dt-pi>
---
--- >>> parseOnly (runTokenParser tokenInstruction) "<?xml-stylesheet type='text/xsl' href='style.xsl'?>"
--- Right (Instruction "xml-stylesheet" "type='text/xsl' href='style.xsl'")
 tokenInstruction :: CharParsing m => Monad m => TokenParser m Instruction
-tokenInstruction = TokenParser $ do
-  name <- tokenInstructionOpen
-  tokenWhitespace
-  content <- manyTill anyChar $ try tokenInstructionClose
-  return $ Instruction name $ Text.pack content
+tokenInstruction = TokenParser instruction
 
 -- | <https://www.w3.org/TR/REC-xml/#NT-Comment>
---
--- >>> parseOnly (runTokenParser tokenComment) "<!-- declarations for <head> & <body> -->"
--- Right " declarations for <head> & <body> "
--- >>> parseOnly (runTokenParser tokenComment) "<!-- B+, B, or B--->"
--- Right " B+, B, or B-"
 tokenComment :: CharParsing m => Monad m => TokenParser m Text
-tokenComment = TokenParser $ do
-  tokenCommentOpen
-  content <- manyTill anyChar $ try tokenCommentClose
-  return $ Text.pack content
+tokenComment = TokenParser comment
 
 -- | <https://www.w3.org/TR/REC-xml/#dt-cdsection>
 --

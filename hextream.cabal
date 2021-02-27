@@ -35,7 +35,10 @@ library
     Data.XML.Parser.Low.Reference
     Data.XML.Parser.Mid
     Data.XML.Parser.Mid.Attribute
+    Data.XML.Parser.Mid.Comment
     Data.XML.Parser.Mid.Doctype
+    Data.XML.Parser.Mid.ExternalID
+    Data.XML.Parser.Mid.Instruction
     Data.XML.Parser.High
     Data.XML.Parser.High.AttrParser
     Data.XML.Parser.High.NameParser

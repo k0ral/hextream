@@ -1,7 +1,11 @@
 Right
     [ TokenXMLDeclaration
-        ( XMLDeclaration "1.0" ( Just "utf-8" ) Nothing )
-    , TokenData [ ContentText "" ]
+        ( XMLDeclaration "1.0"
+            ( Just "utf-8" ) Nothing
+        )
+    , TokenData
+        [ ContentText "
+        " ]
     , TokenStartTag
         ( StartTag
             ( QName
@@ -14,11 +18,13 @@ Right
                     { namePrefix = ""
                     , nameLocal = "xmlns"
                     }
-                ) [ ContentText "http://www.w3.org/2005/Atom" ]
+                )
+                [ ContentText "http://www.w3.org/2005/Atom" ]
             ]
         )
-    , TokenData [ ContentText "
-        " ]
+    , TokenData
+        [ ContentText "
+          " ]
     , TokenStartTag
         ( StartTag
             ( QName
@@ -31,17 +37,22 @@ Right
                     { namePrefix = ""
                     , nameLocal = "type"
                     }
-                ) [ ContentText "text" ]
+                )
+                [ ContentText "text" ]
             ]
         )
     , TokenData
-        [ ContentReference ( EntityRef "lt" )
+        [ ContentReference
+            ( EntityRef "lt" )
         , ContentText "em"
-        , ContentReference ( EntityRef "gt" )
+        , ContentReference
+            ( EntityRef "gt" )
         , ContentText "Example"
-        , ContentReference ( EntityRef "lt" )
+        , ContentReference
+            ( EntityRef "lt" )
         , ContentText "/em"
-        , ContentReference ( EntityRef "gt" )
+        , ContentReference
+            ( EntityRef "gt" )
         , ContentText " Feed"
         ]
     , TokenEndTag
@@ -50,8 +61,9 @@ Right
             , nameLocal = "title"
             }
         )
-    , TokenData [ ContentText "
-        " ]
+    , TokenData
+        [ ContentText "
+          " ]
     , TokenEmptyElementTag
         ( EmptyElementTag
             ( QName
@@ -64,11 +76,13 @@ Right
                     { namePrefix = ""
                     , nameLocal = "href"
                     }
-                ) [ ContentText "http://example.org/" ]
+                )
+                [ ContentText "http://example.org/" ]
             ]
         )
-    , TokenData [ ContentText "
-        " ]
+    , TokenData
+        [ ContentText "
+          " ]
     , TokenStartTag
         ( StartTag
             ( QName
@@ -77,15 +91,17 @@ Right
                 }
             ) []
         )
-    , TokenData [ ContentText "2003-12-13T18:30:02Z" ]
+    , TokenData
+        [ ContentText "2003-12-13T18:30:02Z" ]
     , TokenEndTag
         ( QName
             { namePrefix = ""
             , nameLocal = "updated"
             }
         )
-    , TokenData [ ContentText "
-        " ]
+    , TokenData
+        [ ContentText "
+          " ]
     , TokenStartTag
         ( StartTag
             ( QName
@@ -94,8 +110,9 @@ Right
                 }
             ) []
         )
-    , TokenData [ ContentText "
-          " ]
+    , TokenData
+        [ ContentText "
+            " ]
     , TokenStartTag
         ( StartTag
             ( QName
@@ -104,23 +121,26 @@ Right
                 }
             ) []
         )
-    , TokenData [ ContentText "John Doe" ]
+    , TokenData
+        [ ContentText "John Doe" ]
     , TokenEndTag
         ( QName
             { namePrefix = ""
             , nameLocal = "name"
             }
         )
-    , TokenData [ ContentText "
-        " ]
+    , TokenData
+        [ ContentText "
+          " ]
     , TokenEndTag
         ( QName
             { namePrefix = ""
             , nameLocal = "author"
             }
         )
-    , TokenData [ ContentText "
-        " ]
+    , TokenData
+        [ ContentText "
+          " ]
     , TokenStartTag
         ( StartTag
             ( QName
@@ -129,15 +149,17 @@ Right
                 }
             ) []
         )
-    , TokenData [ ContentText "urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6" ]
+    , TokenData
+        [ ContentText "urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6" ]
     , TokenEndTag
         ( QName
             { namePrefix = ""
             , nameLocal = "id"
             }
         )
-    , TokenData [ ContentText "
-        " ]
+    , TokenData
+        [ ContentText "
+          " ]
     , TokenStartTag
         ( StartTag
             ( QName
@@ -146,8 +168,9 @@ Right
                 }
             ) []
         )
-    , TokenData [ ContentText "
-          " ]
+    , TokenData
+        [ ContentText "
+            " ]
     , TokenStartTag
         ( StartTag
             ( QName
@@ -156,15 +179,17 @@ Right
                 }
             ) []
         )
-    , TokenData [ ContentText "Atom-Powered Robots Run Amok" ]
+    , TokenData
+        [ ContentText "Atom-Powered Robots Run Amok" ]
     , TokenEndTag
         ( QName
             { namePrefix = ""
             , nameLocal = "title"
             }
         )
-    , TokenData [ ContentText "
-          " ]
+    , TokenData
+        [ ContentText "
+            " ]
     , TokenEmptyElementTag
         ( EmptyElementTag
             ( QName
@@ -177,11 +202,13 @@ Right
                     { namePrefix = ""
                     , nameLocal = "href"
                     }
-                ) [ ContentText "http://example.org/2003/12/13/atom03" ]
+                )
+                [ ContentText "http://example.org/2003/12/13/atom03" ]
             ]
         )
-    , TokenData [ ContentText "
-          " ]
+    , TokenData
+        [ ContentText "
+            " ]
     , TokenStartTag
         ( StartTag
             ( QName
@@ -190,15 +217,17 @@ Right
                 }
             ) []
         )
-    , TokenData [ ContentText "urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a" ]
+    , TokenData
+        [ ContentText "urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a" ]
     , TokenEndTag
         ( QName
             { namePrefix = ""
             , nameLocal = "id"
             }
         )
-    , TokenData [ ContentText "
-          " ]
+    , TokenData
+        [ ContentText "
+            " ]
     , TokenStartTag
         ( StartTag
             ( QName
@@ -207,15 +236,17 @@ Right
                 }
             ) []
         )
-    , TokenData [ ContentText "2003-12-13T18:30:02Z" ]
+    , TokenData
+        [ ContentText "2003-12-13T18:30:02Z" ]
     , TokenEndTag
         ( QName
             { namePrefix = ""
             , nameLocal = "updated"
             }
         )
-    , TokenData [ ContentText "
-          " ]
+    , TokenData
+        [ ContentText "
+            " ]
     , TokenStartTag
         ( StartTag
             ( QName
@@ -224,27 +255,33 @@ Right
                 }
             ) []
         )
-    , TokenData [ ContentText "Some text." ]
+    , TokenData
+        [ ContentText "Some text." ]
     , TokenEndTag
         ( QName
             { namePrefix = ""
             , nameLocal = "summary"
             }
         )
-    , TokenData [ ContentText "
-        " ]
+    , TokenData
+        [ ContentText "
+          " ]
     , TokenEndTag
         ( QName
             { namePrefix = ""
             , nameLocal = "entry"
             }
         )
-    , TokenData [ ContentText "" ]
+    , TokenData
+        [ ContentText "
+        " ]
     , TokenEndTag
         ( QName
             { namePrefix = ""
             , nameLocal = "feed"
             }
         )
-    , TokenData [ ContentText "" ]
+    , TokenData
+        [ ContentText "
+        " ]
     ]

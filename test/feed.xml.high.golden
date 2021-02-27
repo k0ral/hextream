@@ -2,7 +2,9 @@ Right
     [ TokenProlog
         ( Prolog
             { prologXmlDeclaration = Just
-                ( XMLDeclaration "1.0" ( Just "utf-8" ) Nothing )
+                ( XMLDeclaration "1.0"
+                    ( Just "utf-8" ) Nothing
+                )
             , prologInstructions = []
             , prologDoctype = Nothing
             }
@@ -38,7 +40,8 @@ Right
                     , "text"
                     )
                 ]
-            ) [ TokenTextContent "<em>Example</em> Feed" ]
+            )
+            [ TokenTextContent "<em>Example</em> Feed" ]
         , TokenTag
             ( QName
                 { namePrefix = ""
@@ -60,40 +63,50 @@ Right
                 { namePrefix = ""
                 , nameLocal = "updated"
                 }
-            ) ( fromList [] ) [ TokenTextContent "2003-12-13T18:30:02Z" ]
+            )
+            ( fromList [] )
+            [ TokenTextContent "2003-12-13T18:30:02Z" ]
         , TokenTag
             ( QName
                 { namePrefix = ""
                 , nameLocal = "author"
                 }
-            ) ( fromList [] )
+            )
+            ( fromList [] )
             [ TokenTag
                 ( QName
                     { namePrefix = ""
                     , nameLocal = "name"
                     }
-                ) ( fromList [] ) [ TokenTextContent "John Doe" ]
+                )
+                ( fromList [] )
+                [ TokenTextContent "John Doe" ]
             , TokenTextContent "
-        "
+                "
             ]
         , TokenTag
             ( QName
                 { namePrefix = ""
                 , nameLocal = "id"
                 }
-            ) ( fromList [] ) [ TokenTextContent "urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6" ]
+            )
+            ( fromList [] )
+            [ TokenTextContent "urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6" ]
         , TokenTag
             ( QName
                 { namePrefix = ""
                 , nameLocal = "entry"
                 }
-            ) ( fromList [] )
+            )
+            ( fromList [] )
             [ TokenTag
                 ( QName
                     { namePrefix = ""
                     , nameLocal = "title"
                     }
-                ) ( fromList [] ) [ TokenTextContent "Atom-Powered Robots Run Amok" ]
+                )
+                ( fromList [] )
+                [ TokenTextContent "Atom-Powered Robots Run Amok" ]
             , TokenTag
                 ( QName
                     { namePrefix = ""
@@ -115,23 +128,31 @@ Right
                     { namePrefix = ""
                     , nameLocal = "id"
                     }
-                ) ( fromList [] ) [ TokenTextContent "urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a" ]
+                )
+                ( fromList [] )
+                [ TokenTextContent "urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a" ]
             , TokenTag
                 ( QName
                     { namePrefix = ""
                     , nameLocal = "updated"
                     }
-                ) ( fromList [] ) [ TokenTextContent "2003-12-13T18:30:02Z" ]
+                )
+                ( fromList [] )
+                [ TokenTextContent "2003-12-13T18:30:02Z" ]
             , TokenTag
                 ( QName
                     { namePrefix = ""
                     , nameLocal = "summary"
                     }
-                ) ( fromList [] ) [ TokenTextContent "Some text." ]
+                )
+                ( fromList [] )
+                [ TokenTextContent "Some text." ]
             , TokenTextContent "
-        "
+                "
             ]
-        , TokenTextContent ""
+        , TokenTextContent "
+          "
         ]
-    , TokenTextContent ""
+    , TokenTextContent "
+      "
     ]

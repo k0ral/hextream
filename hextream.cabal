@@ -13,7 +13,7 @@ maintainer:          mail@cmoreau.info
 category:            Parsing, XML
 build-type:          Custom
 extra-source-files:  README.md, test/*.xml, test/*.golden
-tested-with:         GHC <8.10 && >=8.6
+tested-with:         GHC <8.12 && >=8.6
 
 source-repository head
   type:     git

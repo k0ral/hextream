@@ -32,6 +32,7 @@ library
     Data.XML.Parser.Low
     Data.XML.Parser.Low.Entity
     Data.XML.Parser.Low.Name
+    Data.XML.Parser.Low.Reference
     Data.XML.Parser.Mid
     Data.XML.Parser.Mid.Attribute
     Data.XML.Parser.Mid.Doctype

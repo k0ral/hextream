@@ -53,7 +53,7 @@ import qualified Data.Text                       as Text
 import           Data.XML.Parser.High.AttrParser
 import           Data.XML.Parser.High.NameParser
 import           Data.XML.Parser.Low
-import qualified Data.XML.Parser.Mid             as L1
+import qualified Data.XML.Parser.Mid             as Mid
 import           Data.XML.Parser.Mid.Attribute
 import           Prelude                         ()
 import           Prelude.Compat
@@ -68,14 +68,14 @@ import           Text.ParserCombinators.ReadP    (readP_to_S)
 
 -- | XML document prolog.
 data Prolog = Prolog
-  { prologXmlDeclaration :: Maybe L1.XMLDeclaration
-  , prologInstructions   :: [L1.Instruction]
-  , prologDoctype        :: Maybe L1.Doctype
+  { prologXmlDeclaration :: Maybe Mid.XMLDeclaration
+  , prologInstructions   :: [Mid.Instruction]
+  , prologDoctype        :: Maybe Mid.Doctype
   } deriving (Eq, Ord, Read, Show)
 
 data Token
   = TokenProlog Prolog
-  | TokenInstruction L1.Instruction
+  | TokenInstruction Mid.Instruction
   | TokenTag QName (Map QName Text) [Token]
   | TokenTextContent Text
   deriving (Eq, Ord, Read, Show)
@@ -143,10 +143,10 @@ anyContent = AnyContent $ const $ pure ()
 -- Right (Instruction "php" "echo 'Hello World!'; ")
 -- >>> parseOnly (runTokenParser instruction) "<!-- comments and whitespace are ignored -->  <?php echo 'Hello World!'; ?>"
 -- Right (Instruction "php" "echo 'Hello World!'; ")
-instruction :: CharParsing m => Monad m => TokenParser m L1.Instruction
+instruction :: CharParsing m => Monad m => TokenParser m Mid.Instruction
 instruction = TokenParser $ do
   skipCommentsWhitespace
-  L1.runTokenParser L1.tokenInstruction
+  Mid.runTokenParser Mid.tokenInstruction
 
 -- | <https://www.w3.org/TR/REC-xml/#NT-prolog>
 --
@@ -156,12 +156,12 @@ instruction = TokenParser $ do
 -- Right (Prolog {prologXmlDeclaration = Just (XMLDeclaration "1.0" ...), prologInstructions = [], prologDoctype = Just (Doctype "greeting" ...)})
 prolog :: CharParsing m => Monad m => TokenParser m Prolog
 prolog = TokenParser $ do
-  xmlDeclaration <- optional $ L1.runTokenParser L1.tokenXmlDeclaration
+  xmlDeclaration <- optional $ Mid.runTokenParser Mid.tokenXmlDeclaration
   skipCommentsWhitespace
   instructions <- runTokenParser $ many instruction
   doctype <- optional $ do
     skipCommentsWhitespace
-    L1.runTokenParser L1.tokenDoctype
+    Mid.runTokenParser Mid.tokenDoctype
 
   when (isNothing xmlDeclaration && null instructions && isNothing doctype)
     $ unexpected "Expected XML prolog"
@@ -173,8 +173,8 @@ prolog = TokenParser $ do
 textContent :: CharParsing m => Monad m => EntityDecoder -> TokenParser m Text
 textContent entityDecoder = TokenParser $ mconcat <$> do
   skipComments
-  (textualData <|> L1.runTokenParser L1.tokenCdata) `sepBy1` L1.runTokenParser L1.tokenComment
-  where textualData = expandContents entityDecoder =<< L1.runTokenParser L1.tokenData
+  (textualData <|> Mid.runTokenParser Mid.tokenCdata) `sepBy1` Mid.runTokenParser Mid.tokenComment
+  where textualData = expandContents entityDecoder =<< Mid.runTokenParser Mid.tokenData
 
 -- | Same as @textContent (decodePredefinedEntities <> decodeHtmlEntities)@, provided for convenience.
 --
@@ -200,7 +200,7 @@ tag :: CharParsing m => Monad m
 tag entityDecoder parseName parseAttributes parseContent = parseStartToEnd <|> parseEmptyElement where
   parseStartToEnd = TokenParser $ do
     skipCommentsWhitespace
-    L1.StartTag name attributes <- L1.runTokenParser L1.tokenStartTag
+    Mid.StartTag name attributes <- Mid.runTokenParser Mid.tokenStartTag
     a <- processName name
     b <- processAttributes a attributes
     c <- case parseContent b of
@@ -208,13 +208,13 @@ tag entityDecoder parseName parseAttributes parseContent = parseStartToEnd <|> p
       AnyContent f       -> f =<< runTokenParser (many $ anyToken entityDecoder)
       WithContent parser -> runTokenParser parser
     skipCommentsWhitespace
-    L1.runTokenParser $ do
-      name' <- L1.tokenEndTag
+    Mid.runTokenParser $ do
+      name' <- Mid.tokenEndTag
       when (name /= name') $ fail "Invalid end tag name"
     return c
   parseEmptyElement = TokenParser $ do
     skipCommentsWhitespace
-    L1.EmptyElementTag name attributes <- L1.runTokenParser L1.tokenEmptyElementTag
+    Mid.EmptyElementTag name attributes <- Mid.runTokenParser Mid.tokenEmptyElementTag
     a <- processName name
     b <- processAttributes a attributes
     case parseContent b of
@@ -269,10 +269,10 @@ anyToken' = anyToken decodeStandardEntities
 -- * Private functions
 
 skipComments :: CharParsing m => Monad m => m ()
-skipComments = void $ many $ L1.runTokenParser L1.tokenComment
+skipComments = void $ many $ Mid.runTokenParser Mid.tokenComment
 
 skipCommentsWhitespace :: CharParsing m => Monad m => m ()
-skipCommentsWhitespace = void $ many $ void (L1.runTokenParser L1.tokenComment) <|> void tokenWhitespace
+skipCommentsWhitespace = void $ many $ void (Mid.runTokenParser Mid.tokenComment) <|> void tokenWhitespace
 
 decodeStandardEntities :: EntityDecoder
 decodeStandardEntities = decodePredefinedEntities <> decodeHtmlEntities

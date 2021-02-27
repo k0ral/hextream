@@ -42,7 +42,7 @@ data Content = ContentText Text | ContentReference Reference
 
 -- | Expand content reference, if any.
 expandContent :: Alternative m => EntityDecoder -> Content -> m Text
-expandContent _ (ContentText t) = pure t
+expandContent _ (ContentText t)      = pure t
 expandContent f (ContentReference r) = expandReference f r
 
 -- | Same as 'expandContent', but on a list. Provided for convenience.

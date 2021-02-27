@@ -40,14 +40,14 @@ module Data.XML.Parser.Mid
   ) where
 
 import           Control.Applicative
-import           Control.Arrow                 ((>>>))
+import           Control.Arrow                   ((>>>))
 import           Control.Monad.Compat
 import           Control.Monad.Fail.Compat
 import           Data.Char
 import           Data.Functor
 import           Data.Maybe
-import           Data.Text                     (Text)
-import qualified Data.Text                     as Text
+import           Data.Text                       (Text)
+import qualified Data.Text                       as Text
 import           Data.XML.Parser.Low
 import           Data.XML.Parser.Mid.Attribute
 import           Data.XML.Parser.Mid.Comment

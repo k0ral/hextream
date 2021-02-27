@@ -13,15 +13,17 @@ module Data.XML.Parser.Low
   , module Data.XML.Parser.Low.Name
   , module Data.XML.Parser.Low.Reference
   , module Data.XML.Parser.Low
+  , module Data.XML.InternalSubset.Parser.Low
   ) where
 
 import           Control.Applicative
-import           Control.Arrow           ((>>>))
+import           Control.Arrow                      ((>>>))
 import           Control.Monad
 import           Data.Char
 import           Data.Functor
-import           Data.Text               (Text)
-import qualified Data.Text               as Text
+import           Data.Text                          (Text)
+import qualified Data.Text                          as Text
+import           Data.XML.InternalSubset.Parser.Low
 import           Data.XML.Parser.Low.Entity
 import           Data.XML.Parser.Low.Name
 import           Data.XML.Parser.Low.Reference
@@ -79,10 +81,6 @@ tokenEqual = do
 tokenContent :: CharParsing m => Monad m => String -> m Content
 tokenContent forbiddenChars = (ContentText . Text.pack <$> some (noneOf $ '&':forbiddenChars))
   <|> (ContentReference <$> tokenReference)
-
--- | @<!ENTITY@
-tokenEntityDeclarationOpen :: CharParsing m => m ()
-tokenEntityDeclarationOpen = void $ string "<!ENTITY"
 
 -- | Return processing instruction name.
 --

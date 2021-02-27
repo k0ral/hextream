@@ -1,0 +1,71 @@
+Right
+    [ TokenXMLDeclaration
+        ( XMLDeclaration "1.0"
+            ( Just "utf-8" ) Nothing
+        )
+    , TokenData
+        [ ContentText "
+        " ]
+    , TokenDoctype
+        ( Doctype "sgml" Nothing
+            ( InternalSubset
+                { _elementTypes =
+                    [ ElementType "sgml" ContentAny ]
+                , _attributeLists = []
+                , _generalEntities = []
+                , _parameterEntities =
+                    [ ParameterEntity "std"
+                        [ ValueText "standard SGML" ]
+                    , ParameterEntity "signature"
+                        [ ValueText " "
+                        , ValueReference
+                            ( CharRef '\8212' )
+                        , ValueText " "
+                        , ValueReference
+                            ( EntityRef "author" )
+                        , ValueText "."
+                        ]
+                    , ParameterEntity "question"
+                        [ ValueText "Why couldn"
+                        , ValueReference
+                            ( CharRef '\8217' )
+                        , ValueText "t I publish my books directly in "
+                        , ValueParameterEntityRef
+                            ( ParameterEntityRef "std" )
+                        , ValueText "?"
+                        ]
+                    , ParameterEntity "author"
+                        [ ValueText "William Shakespeare" ]
+                    ]
+                , _notations = []
+                , _instructions = []
+                }
+            )
+        )
+    , TokenData
+        [ ContentText "
+        " ]
+    , TokenStartTag
+        ( StartTag
+            ( QName
+                { namePrefix = ""
+                , nameLocal = "sgml"
+                }
+            ) []
+        )
+    , TokenData
+        [ ContentReference
+            ( EntityRef "question" )
+        , ContentReference
+            ( EntityRef "signature" )
+        ]
+    , TokenEndTag
+        ( QName
+            { namePrefix = ""
+            , nameLocal = "sgml"
+            }
+        )
+    , TokenData
+        [ ContentText "
+        " ]
+    ]

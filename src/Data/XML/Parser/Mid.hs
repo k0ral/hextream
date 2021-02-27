@@ -99,11 +99,6 @@ instance (Parsing m, Monad m) => MonadFail (TokenParser m) where
 
 
 -- | <https://www.w3.org/TR/REC-xml/#NT-doctypedecl>
---
--- >>> parseOnly (runTokenParser tokenDoctype) "<!DOCTYPE greeting SYSTEM 'hello.dtd'>"
--- Right (Doctype "greeting" (Just (SystemID "hello.dtd")) [])
--- >>> parseOnly (runTokenParser tokenDoctype) "<!DOCTYPE foo [ <!ENTITY x '&lt;'> ]>"
--- Right (Doctype "foo" Nothing [GeneralEntityDeclaration "x" [ContentReference (EntityRef "lt")]])
 tokenDoctype :: CharParsing m => Monad m => TokenParser m Doctype
 tokenDoctype = TokenParser doctype
 

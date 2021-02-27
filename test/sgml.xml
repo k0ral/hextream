@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE sgml [
+  <!ELEMENT sgml ANY>
+  <!ENTITY % std       "standard SGML">
+  <!ENTITY % signature " &#x2014; &author;.">
+  <!ENTITY % question  "Why couldn&#x2019;t I publish my books directly in %std;?">
+  <!ENTITY % author    "William Shakespeare">
+]>
+<sgml>&question;&signature;</sgml>
